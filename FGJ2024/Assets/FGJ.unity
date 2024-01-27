@@ -318,12 +318,12 @@ GameObject:
   - component: {fileID: 413027000}
   - component: {fileID: 413026999}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &413026999
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -700,6 +700,58 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1097590615
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1097590617}
+  - component: {fileID: 1097590616}
+  m_Layer: 0
+  m_Name: Gamemanager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1097590616
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097590615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d2859e923cbced47bfba116d551060a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawner: {fileID: 0}
+  waitTime: 0.5
+  moveTime: 0.5
+  waypointPrefab: {fileID: 3114446039399253960, guid: 98749c0be7e3a51489d4452dd48654ee,
+    type: 3}
+  followerPrefab: {fileID: 8608046199354605620, guid: 437d9c54f3f29004faf2fe78cceaf688,
+    type: 3}
+  Player: {fileID: 2035523193}
+--- !u!4 &1097590617
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1097590615}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.5629462, y: 0.8577431, z: -0.4909811}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1188047791
 GameObject:
   m_ObjectHideFlags: 0
@@ -1132,6 +1184,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MoveSpeed: 8
   RotationSpeed: 3
+  anim: {fileID: 0}
+  animScale: 0
 --- !u!65 &2035523190
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1281,3 +1335,4 @@ SceneRoots:
   - {fileID: 11368646}
   - {fileID: 413027002}
   - {fileID: 1188047794}
+  - {fileID: 1097590617}
