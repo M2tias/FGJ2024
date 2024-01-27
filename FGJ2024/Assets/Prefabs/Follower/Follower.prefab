@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 3726178953311257635}
   - component: {fileID: 2199883116782314605}
   - component: {fileID: 605064700405650576}
-  m_Layer: 0
+  - component: {fileID: 3220168788500520670}
+  m_Layer: 7
   m_Name: Follower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,3 +121,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a36d05dea8f6b614bb20ccdc8e1a8cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextWaypoint: {fileID: 0}
+--- !u!195 &3220168788500520670
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8608046199354605620}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.22
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
