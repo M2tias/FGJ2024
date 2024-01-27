@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
 public class PlayerMovement : MonoBehaviour
 {
     NavMeshAgent navmeshagent;
@@ -13,7 +12,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float animScale;
     private bool spawnWayPoint = false;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -59,6 +58,12 @@ public class PlayerMovement : MonoBehaviour
             //GameManager.main.SpawnFollower();
             GameManager.main.DrinkBeer();
             Destroy(other.gameObject);
+        }
+        if (other.tag=="Beer")
+        {
+            GameManager.main.EatShit();
+            Destroy(other.gameObject);
+
         }
     }
     
