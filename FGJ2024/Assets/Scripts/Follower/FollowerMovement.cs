@@ -7,6 +7,14 @@ public class FollowerMovement : MonoBehaviour
 {
     public bool HasMoved { get; set; }
 
+    private Collider collider;
+
+    [SerializeField]
+    private float normalAgentRadius;
+
+    [SerializeField]
+    private float runSpeed;
+
     [SerializeField]
     private Waypoint currentWaypoint;
     private Waypoint previousWaypoint;
@@ -14,6 +22,7 @@ public class FollowerMovement : MonoBehaviour
     private NavMeshAgent agent;
 
     private bool moveStarted = false;
+    private FollowerState state = FollowerState.RunIn;
 
     // Start is called before the first frame update
     void Start()
@@ -21,38 +30,74 @@ public class FollowerMovement : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.isStopped = false;
         HasMoved = false;
+        moveStarted = true;
+        collider = GetComponent<CapsuleCollider>();
     }
 
     void Update()
     {
         if (currentWaypoint == null)
         {
+            Debug.Log($"Null waypoint");
             agent.SetDestination(GameManager.main.GetPlayer().position);
-            currentWaypoint = previousWaypoint.NextWaypoint;
+            currentWaypoint = GameManager.main.GetLastWaypoint();
         }
         else
         {
             agent.SetDestination(currentWaypoint.transform.position);
         }
 
-        // Vector2 waypoint = new Vector2(currentWaypoint.transform.position.x, currentWaypoint.transform.position.z);
-        // Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
-
-        if (GameManager.main.DancePhase == DancePhase.Move)
+        if (state == FollowerState.RunIn)
         {
-            if (!moveStarted)
+            collider.enabled = false;
+            agent.radius = 0.15f;
+            agent.speed = runSpeed;
+
+            Vector2 dest = new(currentWaypoint.transform.position.x, currentWaypoint.transform.position.z);
+            Vector2 pos = new(transform.position.x, transform.position.z);
+
+            if ((pos - dest).magnitude <= 0.1f)
             {
-                Debug.Log("Start dancing");
-                moveStarted = true;
-                agent.isStopped = false;
-                StartNextWaypoint();
+                state = FollowerState.Dance;
+            }
+
+            if (GameManager.main.DancePhase == DancePhase.Move)
+            {
+                if (!moveStarted)
+                {
+                    moveStarted = true;
+                    StartNextWaypoint();
+                }
+            }
+            else if (GameManager.main.DancePhase == DancePhase.Wait)
+            {
+                moveStarted = false;
             }
         }
-        else if (GameManager.main.DancePhase == DancePhase.Wait)// || (waypoint - currentPos).magnitude < 0.1f)
+        else if (state == FollowerState.Dance)
         {
-            Debug.Log("Waiting");
-            // agent.isStopped = true;
-            moveStarted = false;
+            collider.enabled = true;
+            agent.radius = normalAgentRadius;
+            agent.speed = GameManager.main.MoveSpeed;
+
+            if (GameManager.main.DancePhase == DancePhase.Move)
+            {
+                if (!moveStarted)
+                {
+                    moveStarted = true;
+                    agent.isStopped = false;
+                    StartNextWaypoint();
+                }
+            }
+            else if (GameManager.main.DancePhase == DancePhase.Wait)
+            {
+                moveStarted = false;
+            }
+        }
+        else
+        {
+            collider.enabled = false;
+            agent.radius = 0.15f;
         }
     }
 
@@ -66,7 +111,6 @@ public class FollowerMovement : MonoBehaviour
             agent.SetDestination(currentWaypoint.transform.position);
         }
         agent.isStopped = false;
-        // HasMoved = false;
     }
 
     public Waypoint CurrentWaypoint()
@@ -79,8 +123,20 @@ public class FollowerMovement : MonoBehaviour
         return previousWaypoint;
     }
 
+    public void SetPreviousWaypoint(Waypoint prev)
+    {
+        previousWaypoint = prev;
+    }
+
     public void SetWaypoint(Waypoint waypoint)
     {
         currentWaypoint = waypoint;
     }
+}
+
+public enum FollowerState
+{
+    RunIn,
+    Dance,
+    RunOut
 }
