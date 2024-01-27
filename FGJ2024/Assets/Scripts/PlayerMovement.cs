@@ -37,7 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
         bool wallHit = Physics.Raycast(new Ray(transform.position, transform.forward), out RaycastHit hitInfo, 0.75f);
 
-        if (wallHit)
+        if (wallHit && hitInfo.collider.tag == "Wall")
         {
             transform.Rotate(Vector3.up * Vector3.Angle(transform.right, hitInfo.normal));
         }
