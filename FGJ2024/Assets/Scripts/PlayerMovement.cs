@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
         transform.Rotate(Vector3.up * RotationDirection * RotationSpeed);       
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Beer");
         {
