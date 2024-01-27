@@ -15,8 +15,6 @@ public class GameManager : MonoBehaviour
     private float moveSpeed;
 
     [SerializeField]
-    private TestSpawner spawner;
-    [SerializeField]
     private float waitTime = 0.2f;
     [SerializeField]
     private float moveTime = 0.2f;
