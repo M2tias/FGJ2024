@@ -7,57 +7,115 @@ public class FollowerMovement : MonoBehaviour
 {
     public bool HasMoved { get; set; }
 
+    private Collider collider;
+
     [SerializeField]
-    private Waypoint nextWaypoint;
+    private float normalAgentRadius;
+
+    [SerializeField]
+    private float runSpeed;
+
+    [SerializeField]
+    private Waypoint currentWaypoint;
     private Waypoint previousWaypoint;
 
     private NavMeshAgent agent;
+
+    private bool moveStarted = false;
+    private FollowerState state = FollowerState.RunIn;
 
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.SetDestination(nextWaypoint.transform.position);
         agent.isStopped = false;
         HasMoved = false;
+        moveStarted = true;
+        collider = GetComponent<CapsuleCollider>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // Debug.Log($"{gameObject.name}: {(HasMoved ? "Y" : "N")}");
-        Vector2 waypoint = new Vector2(nextWaypoint.transform.position.x, nextWaypoint.transform.position.z);
-        Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
-
-        if ((waypoint - currentPos).magnitude < 0.1f)
+        if (currentWaypoint == null)
         {
-            previousWaypoint = nextWaypoint;
-            nextWaypoint = nextWaypoint.NextWaypoint();
-            agent.isStopped = true;
-            if (!HasMoved)
-            {
-                HasMoved = true;
-                Debug.Log("HasMoved");
-            }
+            Debug.Log($"Null waypoint");
+            agent.SetDestination(GameManager.main.GetPlayer().position);
+            currentWaypoint = GameManager.main.GetLastWaypoint();
+        }
+        else
+        {
+            agent.SetDestination(currentWaypoint.transform.position);
         }
 
-        if (GameManager.main.CanMove && !HasMoved)
+        if (state == FollowerState.RunIn)
         {
-            Debug.Log("Start next waypoint");
-            StartNextWaypoint();
+            collider.enabled = false;
+            agent.radius = 0.15f;
+            agent.speed = runSpeed;
+
+            Vector2 dest = new(currentWaypoint.transform.position.x, currentWaypoint.transform.position.z);
+            Vector2 pos = new(transform.position.x, transform.position.z);
+
+            if ((pos - dest).magnitude <= 0.1f)
+            {
+                state = FollowerState.Dance;
+            }
+
+            if (GameManager.main.DancePhase == DancePhase.Move)
+            {
+                if (!moveStarted)
+                {
+                    moveStarted = true;
+                    StartNextWaypoint();
+                }
+            }
+            else if (GameManager.main.DancePhase == DancePhase.Wait)
+            {
+                moveStarted = false;
+            }
+        }
+        else if (state == FollowerState.Dance)
+        {
+            collider.enabled = true;
+            agent.radius = normalAgentRadius;
+            agent.speed = GameManager.main.MoveSpeed;
+
+            if (GameManager.main.DancePhase == DancePhase.Move)
+            {
+                if (!moveStarted)
+                {
+                    moveStarted = true;
+                    agent.isStopped = false;
+                    StartNextWaypoint();
+                }
+            }
+            else if (GameManager.main.DancePhase == DancePhase.Wait)
+            {
+                moveStarted = false;
+            }
+        }
+        else
+        {
+            collider.enabled = false;
+            agent.radius = 0.15f;
         }
     }
 
     void StartNextWaypoint()
     {
-        agent.SetDestination(nextWaypoint.transform.position);
+        previousWaypoint = currentWaypoint;
+        currentWaypoint = currentWaypoint.NextWaypoint;
+
+        if (currentWaypoint != null)
+        {
+            agent.SetDestination(currentWaypoint.transform.position);
+        }
         agent.isStopped = false;
-       // HasMoved = false;
     }
 
     public Waypoint CurrentWaypoint()
     {
-        return nextWaypoint;
+        return currentWaypoint;
     }
 
     public Waypoint PreviousWaypoint()
@@ -65,8 +123,20 @@ public class FollowerMovement : MonoBehaviour
         return previousWaypoint;
     }
 
+    public void SetPreviousWaypoint(Waypoint prev)
+    {
+        previousWaypoint = prev;
+    }
+
     public void SetWaypoint(Waypoint waypoint)
     {
-        nextWaypoint = waypoint;
+        currentWaypoint = waypoint;
     }
+}
+
+public enum FollowerState
+{
+    RunIn,
+    Dance,
+    RunOut
 }
