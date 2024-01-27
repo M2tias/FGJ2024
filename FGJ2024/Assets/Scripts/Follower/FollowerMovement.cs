@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class FollowerMovement : MonoBehaviour
 {
     public bool HasMoved { get; set; }
+    public bool WasCrashed { get; private set; }
 
     private Collider collider;
 
@@ -36,15 +37,26 @@ public class FollowerMovement : MonoBehaviour
 
     void Update()
     {
-        if (currentWaypoint == null)
+        if (state != FollowerState.RunOut)
         {
-            Debug.Log($"Null waypoint");
-            agent.SetDestination(GameManager.main.GetPlayer().position);
-            currentWaypoint = GameManager.main.GetLastWaypoint();
+            if (currentWaypoint == null)
+            {
+                Debug.Log($"Null waypoint");
+                agent.SetDestination(GameManager.main.GetPlayer().position);
+                currentWaypoint = GameManager.main.GetLastWaypoint();
+            }
+            else
+            {
+                agent.SetDestination(currentWaypoint.transform.position);
+            }
         }
         else
         {
-            agent.SetDestination(currentWaypoint.transform.position);
+            bool hasRanAway = DestinationReached(agent, transform.position);
+            if (hasRanAway)
+            {
+                Destroy(gameObject);
+            }
         }
 
         if (state == FollowerState.RunIn)
@@ -98,6 +110,7 @@ public class FollowerMovement : MonoBehaviour
         {
             collider.enabled = false;
             agent.radius = 0.15f;
+            agent.speed = runSpeed;
         }
     }
 
@@ -131,6 +144,28 @@ public class FollowerMovement : MonoBehaviour
     public void SetWaypoint(Waypoint waypoint)
     {
         currentWaypoint = waypoint;
+    }
+
+    public void RunAway()
+    {
+        state = FollowerState.RunOut;
+        WasCrashed = true;
+        Vector2 tp2 = Random.insideUnitCircle * 30f;
+        Vector3 targetPos = new Vector3(tp2.x, transform.position.y, tp2.y);
+
+        agent.SetDestination(targetPos);
+        agent.isStopped = false;
+    }
+    public static bool DestinationReached(NavMeshAgent agent, Vector3 actualPosition)
+    {
+        if (agent.pathPending)
+        {
+            return Vector3.Distance(actualPosition, agent.pathEndPosition) <= agent.stoppingDistance;
+        }
+        else
+        {
+            return (agent.remainingDistance <= agent.stoppingDistance);
+        }
     }
 }
 

@@ -24,6 +24,8 @@ public class GameManager : MonoBehaviour
     private GameObject followerPrefab;
     [SerializeField]
     private Transform Player;
+    [SerializeField]
+    private GameObject poopPrefab;
 
     private List<Waypoint> waypoints = new();
     private List<FollowerMovement> followers = new();
@@ -149,6 +151,31 @@ public class GameManager : MonoBehaviour
     public Waypoint GetLastWaypoint()
     {
         return waypoints.Last();
+    }
+
+    public void CrashedFollowers(FollowerMovement follower)
+    {
+        int followerIndex = followers.IndexOf(follower);
+        List<FollowerMovement> deleted = new();
+
+        for (int i = followerIndex; i < followers.Count; i++)
+        {
+            Debug.Log(followerIndex);
+            FollowerMovement f = followers[i];
+            f.RunAway();
+            deleted.Add(f);
+
+            // Last guy poops
+            if (i == followers.Count - 1)
+            {
+                Instantiate(poopPrefab, f.transform.position, Quaternion.identity, transform);
+            }
+        }
+
+        foreach(FollowerMovement f in deleted)
+        {
+            followers.Remove(f);
+        }
     }
 }
 
