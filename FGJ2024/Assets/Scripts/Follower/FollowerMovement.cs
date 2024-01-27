@@ -9,6 +9,7 @@ public class FollowerMovement : MonoBehaviour
 
     [SerializeField]
     private Waypoint nextWaypoint;
+    private Waypoint previousWaypoint;
 
     private NavMeshAgent agent;
 
@@ -24,23 +25,26 @@ public class FollowerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log($"{gameObject.name}: {(HasMoved ? "Y" : "N")}");
+        // Debug.Log($"{gameObject.name}: {(HasMoved ? "Y" : "N")}");
         Vector2 waypoint = new Vector2(nextWaypoint.transform.position.x, nextWaypoint.transform.position.z);
         Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
 
         if ((waypoint - currentPos).magnitude < 0.1f)
         {
+            previousWaypoint = nextWaypoint;
             nextWaypoint = nextWaypoint.NextWaypoint();
             agent.isStopped = true;
             if (!HasMoved)
             {
                 HasMoved = true;
+                Debug.Log("HasMoved");
             }
-            //Invoke("StartNextWaypoint", 0.5f);
-            if (GameManager.main.CanMove && !HasMoved)
-            {
-                StartNextWaypoint();
-            }
+        }
+
+        if (GameManager.main.CanMove && !HasMoved)
+        {
+            Debug.Log("Start next waypoint");
+            StartNextWaypoint();
         }
     }
 
@@ -48,12 +52,17 @@ public class FollowerMovement : MonoBehaviour
     {
         agent.SetDestination(nextWaypoint.transform.position);
         agent.isStopped = false;
-        HasMoved = false;
+       // HasMoved = false;
     }
 
     public Waypoint CurrentWaypoint()
     {
         return nextWaypoint;
+    }
+
+    public Waypoint PreviousWaypoint()
+    {
+        return previousWaypoint;
     }
 
     public void SetWaypoint(Waypoint waypoint)

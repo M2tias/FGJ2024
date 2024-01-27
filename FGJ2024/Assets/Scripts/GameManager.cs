@@ -22,15 +22,15 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log($"Spawner: {spawner.GetFollowers().All(x => x.HasMoved)}, {CanMove}");
-        if (!CanMove && Time.time - lastMove > waitTime)
+        // Debug.Log($"Spawner: {spawner.GetFollowers().All(x => x.HasMoved)}, {CanMove}");
+        if (!CanMove && (Time.time - lastMove > waitTime))
         {
+            Debug.Log("Can move again");
             CanMove = true;
         }
         else if (CanMove)
@@ -38,6 +38,7 @@ public class GameManager : MonoBehaviour
             bool allMoved = spawner.GetFollowers().All(x => x.HasMoved);
             if (allMoved)
             {
+                Debug.Log("All moved");
                 CanMove = false;
                 lastMove = Time.time;
                 Debug.Log(lastMove);

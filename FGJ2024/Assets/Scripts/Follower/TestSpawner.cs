@@ -25,7 +25,7 @@ public class TestSpawner : MonoBehaviour
             FollowerMovement follower = gameObject.GetComponent<FollowerMovement>();
             FollowerMovement previousFollower = followers.Last();
             followers.Add(follower);
-            follower.SetWaypoint(previousFollower.CurrentWaypoint());
+            follower.SetWaypoint(previousFollower.PreviousWaypoint());
         }
     }
 
