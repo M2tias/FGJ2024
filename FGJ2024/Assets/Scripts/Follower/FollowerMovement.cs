@@ -8,56 +8,70 @@ public class FollowerMovement : MonoBehaviour
     public bool HasMoved { get; set; }
 
     [SerializeField]
-    private Waypoint nextWaypoint;
+    private Waypoint currentWaypoint;
     private Waypoint previousWaypoint;
 
     private NavMeshAgent agent;
+
+    private bool moveStarted = false;
 
     // Start is called before the first frame update
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.SetDestination(nextWaypoint.transform.position);
         agent.isStopped = false;
         HasMoved = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        // Debug.Log($"{gameObject.name}: {(HasMoved ? "Y" : "N")}");
-        Vector2 waypoint = new Vector2(nextWaypoint.transform.position.x, nextWaypoint.transform.position.z);
-        Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
-
-        if ((waypoint - currentPos).magnitude < 0.1f)
+        if (currentWaypoint == null)
         {
-            previousWaypoint = nextWaypoint;
-            nextWaypoint = nextWaypoint.NextWaypoint();
-            agent.isStopped = true;
-            if (!HasMoved)
-            {
-                HasMoved = true;
-                Debug.Log("HasMoved");
-            }
+            agent.SetDestination(GameManager.main.GetPlayer().position);
+            currentWaypoint = previousWaypoint.NextWaypoint;
+        }
+        else
+        {
+            agent.SetDestination(currentWaypoint.transform.position);
         }
 
-        if (GameManager.main.CanMove && !HasMoved)
+        // Vector2 waypoint = new Vector2(currentWaypoint.transform.position.x, currentWaypoint.transform.position.z);
+        // Vector2 currentPos = new Vector2(transform.position.x, transform.position.z);
+
+        if (GameManager.main.DancePhase == DancePhase.Move)
         {
-            Debug.Log("Start next waypoint");
-            StartNextWaypoint();
+            if (!moveStarted)
+            {
+                Debug.Log("Start dancing");
+                moveStarted = true;
+                agent.isStopped = false;
+                StartNextWaypoint();
+            }
+        }
+        else if (GameManager.main.DancePhase == DancePhase.Wait)// || (waypoint - currentPos).magnitude < 0.1f)
+        {
+            Debug.Log("Waiting");
+            // agent.isStopped = true;
+            moveStarted = false;
         }
     }
 
     void StartNextWaypoint()
     {
-        agent.SetDestination(nextWaypoint.transform.position);
+        previousWaypoint = currentWaypoint;
+        currentWaypoint = currentWaypoint.NextWaypoint;
+
+        if (currentWaypoint != null)
+        {
+            agent.SetDestination(currentWaypoint.transform.position);
+        }
         agent.isStopped = false;
-       // HasMoved = false;
+        // HasMoved = false;
     }
 
     public Waypoint CurrentWaypoint()
     {
-        return nextWaypoint;
+        return currentWaypoint;
     }
 
     public Waypoint PreviousWaypoint()
@@ -67,6 +81,6 @@ public class FollowerMovement : MonoBehaviour
 
     public void SetWaypoint(Waypoint waypoint)
     {
-        nextWaypoint = waypoint;
+        currentWaypoint = waypoint;
     }
 }

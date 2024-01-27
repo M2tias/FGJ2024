@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,8 +8,11 @@ public class PlayerMovement : MonoBehaviour
     Rigidbody rb;
     public float MoveSpeed = 5.0f;
     public float RotationSpeed = 5.0f;
-
-
+    [SerializeField]
+    private AnimationClip anim;
+    [SerializeField]
+    private float animScale;
+    private bool spawnWayPoint = false;
     
     // Start is called before the first frame update
     void Start()
@@ -20,8 +24,18 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        MovePlayer();
+        if (GameManager.main.DancePhase == DancePhase.Move)
+        {
+            MovePlayer();
+            spawnWayPoint = true;
+        }
         RotatePlayer();
+
+        if (GameManager.main.DancePhase == DancePhase.Wait && spawnWayPoint)
+        {
+            GameManager.main.SpawnWaypoint(transform.position);
+            spawnWayPoint = false;
+        }
     }
     void MovePlayer()
     {
