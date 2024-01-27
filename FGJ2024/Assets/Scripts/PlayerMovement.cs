@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GridBrushBase;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -24,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log(navmeshagent.pathStatus);
         MoveSpeed = GameManager.main.MoveSpeed;
 
         if (GameManager.main.DancePhase == DancePhase.Move)
@@ -33,6 +35,13 @@ public class PlayerMovement : MonoBehaviour
         }
 
         RotatePlayer();
+
+        bool wallHit = Physics.Raycast(new Ray(transform.position, transform.forward), out RaycastHit hitInfo, 0.75f);
+
+        if (wallHit)
+        {
+            transform.Rotate(Vector3.up * Vector3.Angle(transform.right, hitInfo.normal));
+        }
 
         if (GameManager.main.DancePhase == DancePhase.Wait && spawnWayPoint)
         {
@@ -45,6 +54,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 move = transform.forward * MoveSpeed;
         navmeshagent.Move(move * Time.deltaTime);
     }
+
     void RotatePlayer()
     {
         float RotationDirection = Input.GetAxis("Horizontal");
@@ -55,11 +65,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.tag == "Beer")
         {
-            //MoveSpeed += 0.2f;
-            //GameManager.main.SpawnFollower();
             GameManager.main.DrinkBeer();
             Destroy(other.gameObject);
         }
     }
-    
+
 }
