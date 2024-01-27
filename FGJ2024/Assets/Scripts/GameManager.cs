@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager main { get; private set; }
@@ -139,6 +139,10 @@ public class GameManager : MonoBehaviour
         if (Health > 0)
         {
             Health -= 1;
+        }
+        if (Health <= 0)
+        {
+            SceneManager.LoadScene(2);
         }
     }
 
