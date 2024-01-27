@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     private float moveStarted = 0f;
     private float waitStarted = 0f;
 
+
+    public int Health { get; set;}
     void Awake()
     {
         main = this;
@@ -41,6 +43,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Health = 3;
     }
 
     // Update is called once per frame
@@ -130,6 +133,13 @@ public class GameManager : MonoBehaviour
     {
         SpawnFollower();
         moveSpeed += 0.25f;
+    }
+    public void EatShit()
+    {
+        if (Health > 0)
+        {
+            Health -= 1;
+        }
     }
 
     public Waypoint GetLastWaypoint()

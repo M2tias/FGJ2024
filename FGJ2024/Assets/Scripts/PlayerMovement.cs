@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GridBrushBase;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -14,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     private float animScale;
     private bool spawnWayPoint = false;
-    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -67,6 +66,12 @@ public class PlayerMovement : MonoBehaviour
         {
             GameManager.main.DrinkBeer();
             Destroy(other.gameObject);
+        }
+        if (other.tag=="Beer")
+        {
+            GameManager.main.EatShit();
+            Destroy(other.gameObject);
+
         }
     }
 
