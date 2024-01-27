@@ -15,9 +15,9 @@ public class GameManager : MonoBehaviour
     private float moveSpeed;
 
     [SerializeField]
-    private float waitTime = 0.2f;
+    private float waitTime = 0.1f;
     [SerializeField]
-    private float moveTime = 0.2f;
+    private float moveTime = 0.1f;
     [SerializeField]
     private GameObject waypointPrefab;
     [SerializeField]
