@@ -35,12 +35,16 @@ public class PlayerMovement : MonoBehaviour
 
         RotatePlayer();
 
-        bool wallHit = Physics.Raycast(new Ray(transform.position, transform.forward), out RaycastHit hitInfo, 0.75f);
+        // check wall
+        bool rayHit = Physics.Raycast(new Ray(transform.position, transform.forward), out RaycastHit hitInfo, 0.75f);
 
-        if (wallHit && hitInfo.collider.tag == "Wall")
+        if (rayHit && hitInfo.collider.tag == "Wall")
         {
             transform.Rotate(Vector3.up * Vector3.Angle(transform.right, hitInfo.normal));
         }
+
+        // check if we hit dancers
+        // bool sphereHit = Physics.SphereCast(new Ray(transform.position, transform.forward), out RaycastHit hitInfo)
 
         if (GameManager.main.DancePhase == DancePhase.Wait && spawnWayPoint)
         {
