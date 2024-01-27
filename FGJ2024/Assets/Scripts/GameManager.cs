@@ -160,7 +160,6 @@ public class GameManager : MonoBehaviour
 
         for (int i = followerIndex; i < followers.Count; i++)
         {
-            Debug.Log(followerIndex);
             FollowerMovement f = followers[i];
             f.RunAway();
             deleted.Add(f);
