@@ -41,4 +41,5 @@ public class PlayerMovement : MonoBehaviour
             MoveSpeed += 1;
         }
     }
+    
 }
