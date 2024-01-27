@@ -59,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
             GameManager.main.DrinkBeer();
             Destroy(other.gameObject);
         }
-        if (other.tag=="Beer")
+        if (other.tag=="Shit")
         {
             GameManager.main.EatShit();
             Destroy(other.gameObject);

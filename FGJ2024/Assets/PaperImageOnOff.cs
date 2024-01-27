@@ -14,7 +14,6 @@ public class PaperImageOnOff : MonoBehaviour
         {
             bool isVisible = (health - 1) >= i;
             imgs[i].enabled = isVisible;
-
         }
     }
     
