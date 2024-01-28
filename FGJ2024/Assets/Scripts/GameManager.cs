@@ -157,6 +157,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = followerIndex; i < followers.Count; i++)
         {
+            SoundSource.main.hitFollower();
             FollowerMovement f = followers[i];
             f.RunAway();
             deleted.Add(f);
