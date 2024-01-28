@@ -35,10 +35,12 @@ public class PlayerMovement : MonoBehaviour
         RotatePlayer();
 
         // check wall
-        bool rayHit = Physics.Raycast(new Ray(transform.position, transform.forward), out RaycastHit hitInfo, 0.5f);
+        bool rayHit = Physics.Raycast(new Ray(transform.position, transform.forward), out RaycastHit hitInfo, 1f);
+        Debug.DrawLine(transform.position, transform.position + transform.forward, Color.red);
 
-        if (rayHit && hitInfo.collider.tag == "Wall")
+        if (rayHit && (hitInfo.collider.tag == "Wall" || hitInfo.collider.tag == "Asset"))
         {
+            Debug.Log($"{hitInfo.collider.name}");
             transform.Rotate(Vector3.up * Vector3.Angle(transform.right, hitInfo.normal));
         }
 
@@ -61,6 +63,8 @@ public class PlayerMovement : MonoBehaviour
             GameManager.main.SpawnWaypoint(transform.position);
             spawnWayPoint = false;
         }
+
+        rb.velocity = Vector3.zero;
     }
     void MovePlayer()
     {

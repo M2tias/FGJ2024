@@ -93,11 +93,15 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        GameObject followerObject = Instantiate(followerPrefab);
-        followerObject.transform.parent = transform;
+        Vector2 tp2 = Random.insideUnitCircle.normalized * 30f;
+        Vector3 targetPos = new Vector3(tp2.x, transform.position.y, tp2.y);
+
+        GameObject followerObject = Instantiate(followerPrefab, targetPos, Quaternion.identity, transform);
 
         FollowerMovement follower = followerObject.GetComponent<FollowerMovement>();
         FollowerHands followerHands = followerObject.GetComponent<FollowerHands>();
+        FollowerMaterial followerMaterial = followerObject.GetComponent<FollowerMaterial>();
+        followerMaterial.Initialize();
 
         if (followers.Count == 0)
         {
@@ -131,7 +135,8 @@ public class GameManager : MonoBehaviour
     {
         SpawnFollower();
         moveSpeed += 0.25f;
-        Score++;
+        // Score++;
+        ScoreManager.main.GiveScore();
     }
     public void EatShit()
     {
