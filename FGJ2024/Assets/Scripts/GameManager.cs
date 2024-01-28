@@ -30,12 +30,13 @@ public class GameManager : MonoBehaviour
     private List<Waypoint> waypoints = new();
     private List<FollowerMovement> followers = new();
 
-    private float lastMove = 0f;
     private float moveStarted = 0f;
     private float waitStarted = 0f;
 
 
     public int Health { get; set; }
+    public int Score { get; private set; }
+
     void Awake()
     {
         main = this;
@@ -130,6 +131,7 @@ public class GameManager : MonoBehaviour
     {
         SpawnFollower();
         moveSpeed += 0.25f;
+        Score++;
     }
     public void EatShit()
     {
