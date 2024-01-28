@@ -158,7 +158,7 @@ public class FollowerMovement : MonoBehaviour
     {
         state = FollowerState.RunOut;
         WasCrashed = true;
-        Vector2 tp2 = Random.insideUnitCircle * 30f;
+        Vector2 tp2 = Random.insideUnitCircle.normalized * 20f;
         Vector3 targetPos = new Vector3(tp2.x, transform.position.y, tp2.y);
 
         agent.SetDestination(targetPos);

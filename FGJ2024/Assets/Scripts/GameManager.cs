@@ -93,8 +93,10 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        GameObject followerObject = Instantiate(followerPrefab);
-        followerObject.transform.parent = transform;
+        Vector2 tp2 = Random.insideUnitCircle.normalized * 30f;
+        Vector3 targetPos = new Vector3(tp2.x, transform.position.y, tp2.y);
+
+        GameObject followerObject = Instantiate(followerPrefab, targetPos, Quaternion.identity, transform);
 
         FollowerMovement follower = followerObject.GetComponent<FollowerMovement>();
         FollowerHands followerHands = followerObject.GetComponent<FollowerHands>();
