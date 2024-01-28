@@ -135,7 +135,8 @@ public class GameManager : MonoBehaviour
     {
         SpawnFollower();
         moveSpeed += 0.25f;
-        Score++;
+        // Score++;
+        ScoreManager.main.GiveScore();
     }
     public void EatShit()
     {
