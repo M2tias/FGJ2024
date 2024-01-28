@@ -7,11 +7,13 @@ TagManager:
   - Beer
   - Wall
   - Shit
+  - Follower
+  - Asset
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Assets
   - Water
   - UI
   - Floor

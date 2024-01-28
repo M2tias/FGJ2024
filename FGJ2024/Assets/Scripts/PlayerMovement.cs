@@ -24,7 +24,6 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(navmeshagent.pathStatus);
         MoveSpeed = GameManager.main.MoveSpeed;
 
         if (GameManager.main.DancePhase == DancePhase.Move)
@@ -35,11 +34,28 @@ public class PlayerMovement : MonoBehaviour
 
         RotatePlayer();
 
-        bool wallHit = Physics.Raycast(new Ray(transform.position, transform.forward), out RaycastHit hitInfo, 0.75f);
+        // check wall
+        bool rayHit = Physics.Raycast(new Ray(transform.position, transform.forward), out RaycastHit hitInfo, 1f);
+        Debug.DrawLine(transform.position, transform.position + transform.forward, Color.red);
 
-        if (wallHit && hitInfo.collider.tag == "Wall")
+        if (rayHit && (hitInfo.collider.tag == "Wall" || hitInfo.collider.tag == "Asset"))
         {
+            Debug.Log($"{hitInfo.collider.name}");
             transform.Rotate(Vector3.up * Vector3.Angle(transform.right, hitInfo.normal));
+        }
+
+        // check if we hit dancers
+        bool sphereHit = Physics.SphereCast(new Ray(transform.position, transform.forward), 1f, out RaycastHit sphereHitInfo, 0.5f);
+
+        if (sphereHit && sphereHitInfo.collider.tag == "Follower")
+        {
+            if (sphereHitInfo.collider.gameObject.TryGetComponent<FollowerMovement>(out FollowerMovement follower))
+            {
+                if (!follower.WasCrashed)
+                {
+                    GameManager.main.CrashedFollowers(follower);
+                }
+            }
         }
 
         if (GameManager.main.DancePhase == DancePhase.Wait && spawnWayPoint)
@@ -47,6 +63,8 @@ public class PlayerMovement : MonoBehaviour
             GameManager.main.SpawnWaypoint(transform.position);
             spawnWayPoint = false;
         }
+
+        rb.velocity = Vector3.zero;
     }
     void MovePlayer()
     {
