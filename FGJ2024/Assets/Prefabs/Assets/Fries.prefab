@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1952472465747496948}
   - component: {fileID: 353069835204498910}
   - component: {fileID: -4802375920403765297}
+  - component: {fileID: 8156356687194190321}
   m_Layer: 0
   m_Name: Fries
   m_TagString: Fries
@@ -151,6 +152,27 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &8156356687194190321
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4198422877092678222}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2b4a0bca99461494e94a4da4e056da16, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &5629887457263172256
 PrefabInstance:
   m_ObjectHideFlags: 0
