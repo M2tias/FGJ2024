@@ -180,6 +180,11 @@ public class FollowerMovement : MonoBehaviour
     {
         followerInFront = follower;
     }
+
+    public FollowerState GetState()
+    {
+        return state;
+    }
 }
 
 public enum FollowerState

@@ -96,14 +96,18 @@ public class GameManager : MonoBehaviour
         followerObject.transform.parent = transform;
 
         FollowerMovement follower = followerObject.GetComponent<FollowerMovement>();
+        FollowerHands followerHands = followerObject.GetComponent<FollowerHands>();
 
         if (followers.Count == 0)
         {
             follower.SetWaypoint(waypoints[waypoints.Count - 1]);
+            FollowerHands playerShoulders = Player.GetComponent<FollowerHands>();
+            followerHands.Initialize(playerShoulders.GetRightShoulder(), playerShoulders.GetLeftShoulder());
         }
         else
         {
             FollowerMovement latestFollower = followers.Last();
+            FollowerHands latestFollowerHands = latestFollower.GetComponent<FollowerHands>();
             Waypoint wp = latestFollower.PreviousWaypoint();
             int wpIndex = Mathf.Max(waypoints.IndexOf(wp), 0);
             Waypoint target = waypoints[wpIndex];
@@ -111,6 +115,7 @@ public class GameManager : MonoBehaviour
             follower.SetWaypoint(target);
             follower.SetPreviousWaypoint(waypoints[wpIndex - 1]);
             follower.SetFollowerInFront(latestFollower.transform);
+            followerHands.Initialize(latestFollowerHands.GetRightShoulder(), latestFollowerHands.GetLeftShoulder());
         }
 
         followers.Add(follower);
