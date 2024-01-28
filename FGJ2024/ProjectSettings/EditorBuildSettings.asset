@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
-    path: Assets/FGJ.unity
-    guid: da2692d25f7429f469908b9c783e84ab
+    path: Assets/Scenes/MatiaksenFGJ.unity
+    guid: acbc8830ff23f0942a6be5770a8efd84
   - enabled: 1
     path: Assets/Scenes/ScoreMenu.unity
     guid: a79eaa1b9ec72664d96ae2fc59fd4732
