@@ -5,9 +5,11 @@ using UnityEngine;
 public class FollowerMaterial : MonoBehaviour
 {
     [SerializeField]
-    List<Texture> textures;
+    List<Material> materials;
     [SerializeField]
-    Material material;
+    SkinnedMeshRenderer bodyRenderer;
+    [SerializeField]
+    MeshRenderer headRenderer;
 
     // Start is called before the first frame update
     void Start()
@@ -17,7 +19,8 @@ public class FollowerMaterial : MonoBehaviour
 
     public void Initialize()
     {
-        material.mainTexture = textures[Random.Range(0, textures.Count - 1)];
+        bodyRenderer.sharedMaterial = materials[Random.Range(0, materials.Count - 1)];
+        headRenderer.sharedMaterial = materials[Random.Range(0, materials.Count - 1)];
     }
 
     // Update is called once per frame

@@ -100,6 +100,8 @@ public class GameManager : MonoBehaviour
 
         FollowerMovement follower = followerObject.GetComponent<FollowerMovement>();
         FollowerHands followerHands = followerObject.GetComponent<FollowerHands>();
+        FollowerMaterial followerMaterial = followerObject.GetComponent<FollowerMaterial>();
+        followerMaterial.Initialize();
 
         if (followers.Count == 0)
         {
