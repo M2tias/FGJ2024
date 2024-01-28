@@ -3,8 +3,17 @@ using UnityEngine;
 
 public class BackToGame : MonoBehaviour
 {
-    public void getback()
+    AudioSource audioData;
+
+    public void moi()
     {
-        SceneManager.LoadScene(1);
+        audioData = GetComponent<AudioSource>();
+        audioData.Play(0);
     }
+    public void getback()
+        {
+        SceneManager.LoadScene(1);
+        }
+
 }
+    

@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 8733945785681341375}
   - component: {fileID: 6522670054468725986}
   - component: {fileID: 5719945467411471832}
+  - component: {fileID: 524864447556670880}
+  - component: {fileID: 640678916835932738}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -150,6 +152,43 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!65 &524864447556670880
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265262221346702732}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.3117383, y: 4.1583595, z: 2.3244731}
+  m_Center: {x: -0.006367564, y: 1.9102988, z: 0.063676715}
+--- !u!208 &640678916835932738
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4265262221346702732}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.1558692, y: 2.0791798, z: 1.1622365}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.006367564, y: 1.9102988, z: 0.063676715}
+  m_TimeToStationary: 0.5
 --- !u!1001 &3745438277923977062
 PrefabInstance:
   m_ObjectHideFlags: 0
