@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7570199622354691554}
   m_Layer: 0
   m_Name: Picture3
-  m_TagString: Untagged
+  m_TagString: Asset
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

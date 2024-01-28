@@ -8,7 +8,8 @@ public class RandomSpawnPosition : MonoBehaviour
     public GameObject[] gameObjectS;
 
     public Transform[] spawnPoints;
-
+    [SerializeField]
+    
 
     void Start()
     {

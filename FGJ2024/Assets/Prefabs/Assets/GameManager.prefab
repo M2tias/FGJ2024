@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 640678916835932738}
   m_Layer: 0
   m_Name: GameManager
-  m_TagString: Untagged
+  m_TagString: Asset
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,6 +56,7 @@ MonoBehaviour:
   followerPrefab: {fileID: 8608046199354605620, guid: 437d9c54f3f29004faf2fe78cceaf688,
     type: 3}
   Player: {fileID: 0}
+  poopPrefab: {fileID: 0}
 --- !u!82 &5719945467411471832
 AudioSource:
   m_ObjectHideFlags: 0
