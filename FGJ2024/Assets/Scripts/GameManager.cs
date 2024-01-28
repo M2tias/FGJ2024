@@ -135,7 +135,8 @@ public class GameManager : MonoBehaviour
     {
         SpawnFollower();
         moveSpeed += 0.25f;
-        Score++;
+        // Score++;
+        ScoreManager.main.GiveScore();
     }
     public void EatShit()
     {
@@ -161,6 +162,7 @@ public class GameManager : MonoBehaviour
 
         for (int i = followerIndex; i < followers.Count; i++)
         {
+            SoundSource.main.hitFollower();
             FollowerMovement f = followers[i];
             f.RunAway();
             deleted.Add(f);
