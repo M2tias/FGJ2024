@@ -11,9 +11,9 @@ public class BackToGame : MonoBehaviour
         audioData.Play(0);
     }
     public void getback()
-        {
-        SceneManager.LoadScene(1);
-        }
+    {
+        ScoreManager.main.Restart();
+        SceneManager.LoadScene(0);
+    }
 
 }
-    
