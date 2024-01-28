@@ -52,6 +52,10 @@ public class FollowerHands : MonoBehaviour
             {
                 tentacles.SetActive(true);
             }
+            else
+            {
+                tentacles.SetActive(false);
+            }
         }
     }
 
