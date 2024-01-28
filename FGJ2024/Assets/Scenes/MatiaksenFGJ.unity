@@ -1031,6 +1031,9 @@ MonoBehaviour:
   RightShoulder: {fileID: 0}
   OwnLeftShoulder: {fileID: 61356358}
   OwnRightShoulder: {fileID: 1688793974}
+  LeftFarJoint: {fileID: 0}
+  RightFarJoint: {fileID: 0}
+  tentacles: {fileID: 0}
 --- !u!114 &47180630934857015 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 228107972705457423, guid: 98749c0be7e3a51489d4452dd48654ee,
