@@ -9163,6 +9163,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2061248755060167608, guid: 623ea35556de02f4089a5d8c3e411cf5,
+        type: 3}
+      propertyPath: m_Carve
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2253383074196921376, guid: 623ea35556de02f4089a5d8c3e411cf5,
         type: 3}
       propertyPath: m_Layer
