@@ -82,14 +82,21 @@ public class PlayerMovement : MonoBehaviour
     {
         if (other.tag == "Beer")
         {
+            SoundSource.main.hitBeer();
             GameManager.main.DrinkBeer();
             Destroy(other.gameObject);
         }
         if (other.tag=="Shit")
         {
+            SoundSource.main.hitShit();
             GameManager.main.EatShit();
             Destroy(other.gameObject);
-
+        }
+        if(other.tag=="Fries")
+        {
+            SoundSource.main.hitFries();
+            GameManager.main.DrinkBeer();
+            Destroy(other.gameObject);
         }
     }
 
