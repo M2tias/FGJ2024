@@ -22,7 +22,7 @@ public class RandomSpawnPosition : MonoBehaviour
         int randItem = Random.Range(0, gameObjectS.Length);
 
         Vector3 position = new Vector3(Random.Range(-10.0f, 10.0f), 0, Random.Range(-10.0f, 10.0f));
-        Instantiate(gameObjectS[randItem], position, Quaternion.identity);
+        Instantiate(gameObjectS[randItem], position, Quaternion.identity, transform);
         StartCoroutine(CreateItem());
 
     }

@@ -24,16 +24,19 @@ public class GameManager : MonoBehaviour
     private GameObject followerPrefab;
     [SerializeField]
     private Transform Player;
+    [SerializeField]
+    private GameObject poopPrefab;
 
     private List<Waypoint> waypoints = new();
     private List<FollowerMovement> followers = new();
 
-    private float lastMove = 0f;
     private float moveStarted = 0f;
     private float waitStarted = 0f;
 
 
-    public int Health { get; set;}
+    public int Health { get; set; }
+    public int Score { get; private set; }
+
     void Awake()
     {
         main = this;
@@ -94,31 +97,26 @@ public class GameManager : MonoBehaviour
         followerObject.transform.parent = transform;
 
         FollowerMovement follower = followerObject.GetComponent<FollowerMovement>();
+        FollowerHands followerHands = followerObject.GetComponent<FollowerHands>();
 
         if (followers.Count == 0)
         {
             follower.SetWaypoint(waypoints[waypoints.Count - 1]);
+            FollowerHands playerShoulders = Player.GetComponent<FollowerHands>();
+            followerHands.Initialize(playerShoulders.GetRightShoulder(), playerShoulders.GetLeftShoulder());
         }
         else
         {
-            if (DancePhase == DancePhase.Wait)
-            {
-                Waypoint wp = followers.Last().PreviousWaypoint();
-                int wpIndex = Mathf.Max(waypoints.IndexOf(wp), 0);
-                Waypoint target = waypoints[wpIndex];
+            FollowerMovement latestFollower = followers.Last();
+            FollowerHands latestFollowerHands = latestFollower.GetComponent<FollowerHands>();
+            Waypoint wp = latestFollower.PreviousWaypoint();
+            int wpIndex = Mathf.Max(waypoints.IndexOf(wp), 0);
+            Waypoint target = waypoints[wpIndex];
 
-                follower.SetWaypoint(target);
-                follower.SetPreviousWaypoint(waypoints[wpIndex - 1]);
-            }
-            else
-            {
-                Waypoint wp = followers.Last().PreviousWaypoint();
-                int wpIndex = Mathf.Max(waypoints.IndexOf(wp), 0);
-                Waypoint target = waypoints[wpIndex];
-
-                follower.SetWaypoint(target);
-                follower.SetPreviousWaypoint(waypoints[wpIndex - 1]);
-            }
+            follower.SetWaypoint(target);
+            follower.SetPreviousWaypoint(waypoints[wpIndex - 1]);
+            follower.SetFollowerInFront(latestFollower.transform);
+            followerHands.Initialize(latestFollowerHands.GetRightShoulder(), latestFollowerHands.GetLeftShoulder());
         }
 
         followers.Add(follower);
@@ -133,6 +131,7 @@ public class GameManager : MonoBehaviour
     {
         SpawnFollower();
         moveSpeed += 0.25f;
+        Score++;
     }
     public void EatShit()
     {
@@ -149,6 +148,30 @@ public class GameManager : MonoBehaviour
     public Waypoint GetLastWaypoint()
     {
         return waypoints.Last();
+    }
+
+    public void CrashedFollowers(FollowerMovement follower)
+    {
+        int followerIndex = followers.IndexOf(follower);
+        List<FollowerMovement> deleted = new();
+
+        for (int i = followerIndex; i < followers.Count; i++)
+        {
+            FollowerMovement f = followers[i];
+            f.RunAway();
+            deleted.Add(f);
+
+            // Last guy poops
+            if (i == followers.Count - 1)
+            {
+                Instantiate(poopPrefab, f.transform.position, Quaternion.identity, transform);
+            }
+        }
+
+        foreach (FollowerMovement f in deleted)
+        {
+            followers.Remove(f);
+        }
     }
 }
 
