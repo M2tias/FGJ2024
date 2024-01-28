@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     private float waitStarted = 0f;
 
 
-    public int Health { get; set;}
+    public int Health { get; set; }
     void Awake()
     {
         main = this;
@@ -103,24 +103,14 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (DancePhase == DancePhase.Wait)
-            {
-                Waypoint wp = followers.Last().PreviousWaypoint();
-                int wpIndex = Mathf.Max(waypoints.IndexOf(wp), 0);
-                Waypoint target = waypoints[wpIndex];
+            FollowerMovement latestFollower = followers.Last();
+            Waypoint wp = latestFollower.PreviousWaypoint();
+            int wpIndex = Mathf.Max(waypoints.IndexOf(wp), 0);
+            Waypoint target = waypoints[wpIndex];
 
-                follower.SetWaypoint(target);
-                follower.SetPreviousWaypoint(waypoints[wpIndex - 1]);
-            }
-            else
-            {
-                Waypoint wp = followers.Last().PreviousWaypoint();
-                int wpIndex = Mathf.Max(waypoints.IndexOf(wp), 0);
-                Waypoint target = waypoints[wpIndex];
-
-                follower.SetWaypoint(target);
-                follower.SetPreviousWaypoint(waypoints[wpIndex - 1]);
-            }
+            follower.SetWaypoint(target);
+            follower.SetPreviousWaypoint(waypoints[wpIndex - 1]);
+            follower.SetFollowerInFront(latestFollower.transform);
         }
 
         followers.Add(follower);
@@ -171,7 +161,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        foreach(FollowerMovement f in deleted)
+        foreach (FollowerMovement f in deleted)
         {
             followers.Remove(f);
         }

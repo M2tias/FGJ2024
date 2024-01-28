@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -24,6 +25,7 @@ public class FollowerMovement : MonoBehaviour
 
     private bool moveStarted = false;
     private FollowerState state = FollowerState.RunIn;
+    private Transform followerInFront;
 
     // Start is called before the first frame update
     void Start()
@@ -85,6 +87,9 @@ public class FollowerMovement : MonoBehaviour
             {
                 moveStarted = false;
             }
+
+            Transform lookAtTransform = followerInFront ?? GameManager.main.GetPlayer().transform;
+            transform.LookAt(lookAtTransform, transform.up);
         }
         else if (state == FollowerState.Dance)
         {
@@ -105,6 +110,9 @@ public class FollowerMovement : MonoBehaviour
             {
                 moveStarted = false;
             }
+
+            Transform lookAtTransform = followerInFront ?? GameManager.main.GetPlayer().transform;
+            transform.LookAt(lookAtTransform, transform.up);
         }
         else
         {
@@ -166,6 +174,11 @@ public class FollowerMovement : MonoBehaviour
         {
             return (agent.remainingDistance <= agent.stoppingDistance);
         }
+    }
+
+    public void SetFollowerInFront(Transform follower)
+    {
+        followerInFront = follower;
     }
 }
 
