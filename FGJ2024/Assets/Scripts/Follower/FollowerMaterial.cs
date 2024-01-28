@@ -19,8 +19,9 @@ public class FollowerMaterial : MonoBehaviour
 
     public void Initialize()
     {
-        bodyRenderer.sharedMaterial = materials[Random.Range(0, materials.Count - 1)];
-        headRenderer.sharedMaterial = materials[Random.Range(0, materials.Count - 1)];
+        Material randomMaterial = materials[Random.Range(0, materials.Count - 1)];
+        bodyRenderer.sharedMaterial = randomMaterial;
+        headRenderer.sharedMaterial = randomMaterial;
     }
 
     // Update is called once per frame
