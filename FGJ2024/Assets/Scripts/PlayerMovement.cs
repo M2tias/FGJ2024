@@ -65,6 +65,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
     void MovePlayer()
     {
@@ -74,7 +75,8 @@ public class PlayerMovement : MonoBehaviour
 
     void RotatePlayer()
     {
-        float RotationDirection = Input.GetAxis("Horizontal");
+        float RotationDirection = Input.GetAxisRaw("Horizontal");
+        Debug.Log($"Rotating {RotationDirection}");
         transform.Rotate(Vector3.up * RotationDirection * RotationSpeed);       
     }
 
