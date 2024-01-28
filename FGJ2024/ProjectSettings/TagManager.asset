@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Shit
   - Follower
+  - Asset
   layers:
   - Default
   - TransparentFX
