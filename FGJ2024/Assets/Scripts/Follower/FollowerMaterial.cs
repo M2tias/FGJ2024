@@ -7,9 +7,16 @@ public class FollowerMaterial : MonoBehaviour
     [SerializeField]
     List<Material> materials;
     [SerializeField]
+    List<Material> armMaterials;
+
+
+    [SerializeField]
     SkinnedMeshRenderer bodyRenderer;
     [SerializeField]
     MeshRenderer headRenderer;
+
+    [SerializeField]
+    List<MeshRenderer> armRenderers;
 
     // Start is called before the first frame update
     void Start()
@@ -19,9 +26,16 @@ public class FollowerMaterial : MonoBehaviour
 
     public void Initialize()
     {
-        Material randomMaterial = materials[Random.Range(0, materials.Count - 1)];
+        int index = Random.Range(0, materials.Count);
+        Material randomMaterial = materials[index];
+        Material armMaterial = armMaterials[index];
         bodyRenderer.sharedMaterial = randomMaterial;
         headRenderer.sharedMaterial = randomMaterial;
+
+        foreach(MeshRenderer mesh in armRenderers)
+        {
+            mesh.material = armMaterial;
+        }
     }
 
     // Update is called once per frame

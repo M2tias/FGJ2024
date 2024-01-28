@@ -7,7 +7,10 @@ public class PlayerMovement : MonoBehaviour
     NavMeshAgent navmeshagent;
     Rigidbody rb;
     private float MoveSpeed = 5.0f;
-    public float RotationSpeed = 5.0f;
+
+    [SerializeField]
+    public float RotationSpeed;
+
     [SerializeField]
     private AnimationClip anim;
     [SerializeField]
@@ -76,8 +79,8 @@ public class PlayerMovement : MonoBehaviour
     void RotatePlayer()
     {
         float RotationDirection = Input.GetAxisRaw("Horizontal");
-        Debug.Log($"Rotating {RotationDirection}");
-        transform.Rotate(Vector3.up * RotationDirection * RotationSpeed);       
+        Debug.Log($"Rotating {Time.deltaTime * RotationDirection * RotationSpeed}");
+        transform.Rotate(Vector3.up, Time.deltaTime * RotationDirection * RotationSpeed);       
     }
 
     private void OnTriggerEnter(Collider other)

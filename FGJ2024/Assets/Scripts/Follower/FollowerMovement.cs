@@ -88,7 +88,8 @@ public class FollowerMovement : MonoBehaviour
             }
 
             Transform lookAtTransform = followerInFront ?? GameManager.main.GetPlayer().transform;
-            transform.LookAt(lookAtTransform, transform.up);
+            Vector3 lookAtTarget = new Vector3(lookAtTransform.position.x, transform.position.y, lookAtTransform.position.z);
+            transform.LookAt(lookAtTarget, transform.up);
         }
         else if (state == FollowerState.Dance)
         {

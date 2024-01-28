@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2feaa03cc1ac346bc5d8d072414f03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotationSpeed: 3
+  RotationSpeed: 100
   anim: {fileID: 0}
   animScale: 0
 --- !u!54 &2313845599210973152
@@ -542,7 +542,7 @@ PrefabInstance:
     - target: {fileID: 8294709520919248831, guid: d6bdcf4d4ff72524086004e60c2d7ba7,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0.545
       objectReference: {fileID: 0}
     - target: {fileID: 8294709520919248831, guid: d6bdcf4d4ff72524086004e60c2d7ba7,
         type: 3}
